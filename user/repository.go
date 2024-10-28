@@ -2,6 +2,7 @@ package user
 
 import (
 	"database/sql"
+	_ "github.com/lib/pq"
 	"log"
 )
 
@@ -54,4 +55,9 @@ func (p *PostgresRepository) GetUserByEmail(email *string) (*User, error) {
 	}
 
 	return &user, nil
+}
+
+// NewPostgresRepository will create a new repository with a connection.
+func NewPostgresRepository(database *sql.DB) *PostgresRepository {
+	return &PostgresRepository{database}
 }
