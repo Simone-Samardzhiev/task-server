@@ -81,6 +81,16 @@ func (p *PostgresRepository) DeleteTokenById(id *uuid.UUID) error {
 	return err
 }
 
+func (p *PostgresRepository) DeleteRefreshTokenById(id *uuid.UUID) error {
+	query := "DELETE FROM tokens WHERE user_id = $1"
+	_, err := p.database.Exec(query, *id)
+	log.Printf("Execiting query in user-PostgresRepository-DeleteToken: %s | Parameters: %s", query, *id)
+	if err != nil {
+		log.Printf("Error in user-PostgresRepository-DeleteToken: %v", err)
+	}
+	return err
+}
+
 func (p *PostgresRepository) GetTokenById(id *uuid.UUID) (*RefreshToken, error) {
 	query := "SELECT id, token, user_id FROM tokens WHERE id = $1"
 	row := p.database.QueryRow(query, *id)

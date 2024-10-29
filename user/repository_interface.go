@@ -17,8 +17,11 @@ type Repository interface {
 	AddToken(*RefreshToken) error
 
 	// DeleteTokenById will delete a token with a specific id.
-	DeleteTokenById(uuid *uuid.UUID) error
+	DeleteTokenById(*uuid.UUID) error
+
+	// DeleteTokenByUserId will delete all tokens connected to a user.
+	DeleteTokenByUserId(*uuid.UUID) error
 
 	// GetTokenById will get the token with a specific id.
-	GetTokenById(uuid *uuid.UUID) (*RefreshToken, error)
+	GetTokenById(*uuid.UUID) (*RefreshToken, error)
 }
