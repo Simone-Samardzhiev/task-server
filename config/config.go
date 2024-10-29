@@ -2,9 +2,13 @@ package config
 
 import (
 	"bufio"
+	"database/sql"
+	"fmt"
 	"log"
 	"os"
 	"strings"
+	"task-server/middleware"
+	"task-server/user"
 )
 
 // LoadEnvironmentFiles will load all the environment files from a .env file.
@@ -42,4 +46,31 @@ func LoadEnvironmentFiles(path string) {
 	if err != nil {
 		log.Printf("Error closing config file: %s", err)
 	}
+}
+
+// CreateHandlers will create the handlers for the server.
+func CreateHandlers() user.Handler {
+	dbName := os.Getenv("DB_NAME")
+	dbUser := os.Getenv("DB_USERNAME")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	jwtSecret := os.Getenv("JWT_SECRET")
+
+	connStatement := fmt.Sprintf("user=%s password=%s dbname=%s",
+		dbUser, dbPassword, dbName)
+
+	db, err := sql.Open("postgres", connStatement)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = db.Ping()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	userRepository := user.NewPostgresRepository(db)
+	authenticator := middleware.NewJWTAuthenticator([]byte(jwtSecret), []string{"Task-App"}, "localhost")
+	service := user.NewServiceImp(userRepository, authenticator)
+	handler := user.NewHandlerImp(service)
+	return handler
 }
