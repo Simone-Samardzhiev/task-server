@@ -111,3 +111,9 @@ func (h *HandlerImp) HandleRefresh(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func NewHandlerImp(service Service) *HandlerImp {
+	return &HandlerImp{
+		Service: service,
+	}
+}

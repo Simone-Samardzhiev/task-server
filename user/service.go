@@ -128,3 +128,10 @@ func (s *ServiceImp) RefreshTokens(tokenSting *string) (*TokenGroup, error) {
 		RefreshToken: *refreshToken,
 	}, nil
 }
+
+func NewServiceImp(repository Repository, authenticator middleware.Authenticator) *ServiceImp {
+	return &ServiceImp{
+		Repository:    repository,
+		Authenticator: authenticator,
+	}
+}
