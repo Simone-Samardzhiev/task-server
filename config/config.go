@@ -55,7 +55,7 @@ func CreateHandlers() user.Handler {
 	dbPassword := os.Getenv("DB_PASSWORD")
 	jwtSecret := os.Getenv("JWT_SECRET")
 
-	connStatement := fmt.Sprintf("user=%s password=%s dbname=%s",
+	connStatement := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable",
 		dbUser, dbPassword, dbName)
 
 	db, err := sql.Open("postgres", connStatement)
