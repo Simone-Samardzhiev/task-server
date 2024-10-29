@@ -9,8 +9,8 @@ type User struct {
 	Password string    `json:"password"`
 }
 
-// NewUser is a struct representing a new user.
-type NewUser struct {
+// WithoutIdUser is a struct representing a user without id.
+type WithoutIdUser struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
