@@ -14,3 +14,9 @@ type WithoutIdUser struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
+
+// TokenGroup is a struct holding the two tokens.
+type TokenGroup struct {
+	AccessToken string `json:"accessToken"`
+	Password    string `json:"password"`
+}
