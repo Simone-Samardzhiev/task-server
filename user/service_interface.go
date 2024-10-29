@@ -6,7 +6,7 @@ type Service interface {
 	Login(*WithoutIdUser) (*string, error)
 
 	// Register will register the user.
-	Register(*WithoutIdUser) (*string, error)
+	Register(*WithoutIdUser) error
 
 	// RefreshTokens will return a new refresh token and access token using the access token.
 	RefreshTokens(*string) (*TokenGroup, error)
