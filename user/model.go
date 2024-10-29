@@ -17,8 +17,8 @@ type WithoutIdUser struct {
 
 // TokenGroup is a struct holding the two tokens.
 type TokenGroup struct {
-	AccessToken string `json:"accessToken"`
-	Password    string `json:"password"`
+	AccessToken  string `json:"accessToken"`
+	RefreshToken string `json:"refreshToken"`
 }
 
 // RefreshToken is a struct representing the information about a token.
