@@ -14,6 +14,10 @@ type HandlerImp struct {
 	Service Service
 }
 
+func (h *HandlerImp) handleInvalidMethod(w http.ResponseWriter) {
+	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+}
+
 // handleInvalidJson will respond to any invalid json formats send to the server.
 func (h *HandlerImp) handleInvalidJson(w http.ResponseWriter) {
 	http.Error(w, "Invalid json format", http.StatusBadRequest)
@@ -31,6 +35,11 @@ func (h *HandlerImp) handleInvalidToken(w http.ResponseWriter) {
 
 // HandleLogin will respond to log in requests and return a refresh token.
 func (h *HandlerImp) HandleLogin(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		h.handleInvalidMethod(w)
+		return
+	}
+
 	var user WithoutIdUser
 	err := json.NewDecoder(r.Body).Decode(&user)
 
@@ -63,6 +72,11 @@ func (h *HandlerImp) HandleLogin(w http.ResponseWriter, r *http.Request) {
 
 // HandleRegister will respond to register requests and add a new user.
 func (h *HandlerImp) HandleRegister(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		h.handleInvalidMethod(w)
+		return
+	}
+
 	var user WithoutIdUser
 	err := json.NewDecoder(r.Body).Decode(&user)
 
@@ -86,6 +100,11 @@ func (h *HandlerImp) HandleRegister(w http.ResponseWriter, r *http.Request) {
 
 // HandleRefresh will respond to refresh token requests and respond with a new token.
 func (h *HandlerImp) HandleRefresh(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		h.handleInvalidMethod(w)
+		return
+	}
+
 	token, err := middleware.GetTokenFromHeader(r)
 	if err != nil {
 		h.handleInvalidToken(w)
