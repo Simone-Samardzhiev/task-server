@@ -20,3 +20,10 @@ type TokenGroup struct {
 	AccessToken string `json:"accessToken"`
 	Password    string `json:"password"`
 }
+
+// RefreshToken is a struct representing the information about a token.
+type RefreshToken struct {
+	Id          uuid.UUID
+	StringToken string
+	UserId      uuid.UUID
+}
