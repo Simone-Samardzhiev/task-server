@@ -56,7 +56,7 @@ func (s *ServiceImp) Register(user *WithoutIdUser) error {
 	}
 
 	if !ok {
-		log.Println()
+		return ErrEmailInUse
 	}
 
 	id := uuid.New()
