@@ -27,7 +27,7 @@ func (t *NullTime) UnmarshalJSON(data []byte) error {
 	return json.Unmarshal(data, &t.Time)
 }
 
-func (t *NullTime) String() string {
+func (t NullTime) String() string {
 	if t.Valid {
 		return t.Time.String()
 	} else {
