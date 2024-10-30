@@ -8,7 +8,7 @@ type Repository interface {
 	GetTasks(uuid *uuid.UUID) ([]Task, error)
 
 	// AddTask will add a new task to a user.
-	AddTask(*Task, *uuid.UUID) (Task, error)
+	AddTask(*Task, *uuid.UUID) error
 
 	// UpdateTask will update an existing task.
 	UpdateTask(*Task) (Task, error)
