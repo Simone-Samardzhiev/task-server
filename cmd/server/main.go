@@ -11,9 +11,9 @@ func main() {
 	userHandler := config.CreateHandlers()
 
 	mux := http.NewServeMux()
-	mux.Handle("users/login", http.HandlerFunc(userHandler.HandleLogin))
-	mux.Handle("users/register", http.HandlerFunc(userHandler.HandleRegister))
-	mux.Handle("users/refresh", http.HandlerFunc(userHandler.HandleRefresh))
+	mux.Handle("/users/login", http.HandlerFunc(userHandler.HandleLogin))
+	mux.Handle("/users/register", http.HandlerFunc(userHandler.HandleRegister))
+	mux.Handle("/users/refresh", http.HandlerFunc(userHandler.HandleRefresh))
 
 	err := http.ListenAndServeTLS(":8080", "../../server-cert.pem", "../../server-key.pem", mux)
 	if err != nil {
