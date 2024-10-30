@@ -113,15 +113,16 @@ func (s *ServiceImp) RefreshTokens(tokenSting *string) (*TokenGroup, error) {
 		return nil, err
 	}
 
-	refreshToken, err := s.Authenticator.CreateRefreshToken(&fetchedToken.Id)
+	tokenId := uuid.New()
+	refreshToken, err := s.Authenticator.CreateRefreshToken(&tokenId)
 	if err != nil {
 		log.Printf("Error in user-ServiceImp-RefreshTokens: %v", err)
 	}
 
 	err = s.Repository.AddToken(&RefreshToken{
-		Id:          uuid.New(),
+		Id:          tokenId,
 		StringToken: *refreshToken,
-		UserId:      fetchedToken.Id,
+		UserId:      fetchedToken.UserId,
 	})
 	if err != nil {
 		log.Printf("Error in user-ServiceImp-RefreshTokens: %v", err)
