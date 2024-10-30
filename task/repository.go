@@ -15,7 +15,7 @@ type PostgresRepository struct {
 func (r *PostgresRepository) countTasks(id *uuid.UUID) (int64, error) {
 	query := "SELECT COUNT(id) FROM tasks WHERE user_id  = $1"
 	log.Printf("Executing query in task-PostgresRepository-countTasks: %s | Parameters %s", query, id.String())
-	row := r.database.QueryRow(query, id)
+	row := r.database.QueryRow(query, *id)
 
 	var count int64
 	err := row.Scan(&count)
@@ -31,7 +31,7 @@ func (r *PostgresRepository) GetTasks(id *uuid.UUID) ([]Task, error) {
 	query := "SELECT * FROM tasks WHERE user_id = $1"
 	log.Printf("Executing query in task-PostgresRepository-GetTasks: %s | Parameters %s", query, id.String())
 
-	rows, err := r.database.Query(query, id)
+	rows, err := r.database.Query(query, *id)
 	if err != nil {
 		log.Printf("Error in task-PostgresRepsitory-GetTasks: %v", err)
 		return nil, err
@@ -104,7 +104,7 @@ func (r *PostgresRepository) DeleteTask(id *uuid.UUID) error {
 	query := "DELETE FROM tasks WHERE id = $1"
 	log.Printf("Executing query in task-PostgresRepository-DeleteTask: %s | Parameters %s", query, id)
 
-	_, err := r.database.Exec(query, id)
+	_, err := r.database.Exec(query, *id)
 	if err != nil {
 		log.Printf("Error in task-PostgresRepsitory-DeleteTasks: %v", err)
 	}
