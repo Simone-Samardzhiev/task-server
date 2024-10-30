@@ -61,7 +61,7 @@ func (p *PostgresRepository) GetUserByEmail(email *string) (*User, error) {
 // AddToken will add a new token to the table.
 func (p *PostgresRepository) AddToken(refreshToken *RefreshToken) error {
 	query := "INSERT INTO tokens(id, token, user_id) VALUES ($1, $2, $3)"
-	_, err := p.database.Exec(query, refreshToken.Id, refreshToken.UserId, refreshToken.Id)
+	_, err := p.database.Exec(query, refreshToken.Id, refreshToken.StringToken, refreshToken.UserId)
 	log.Printf("Executing query in user-PostgresRepository-AddToken: %s | Parameters: %s, %s, %s", query, refreshToken.Id.String(), refreshToken.StringToken, refreshToken.UserId.String())
 	if err != nil {
 		log.Printf("Error in user-PostgresRepository-AddToken: %v", err)
