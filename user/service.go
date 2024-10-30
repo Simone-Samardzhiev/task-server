@@ -44,6 +44,16 @@ func (s *ServiceImp) Login(user *WithoutIdUser) (*string, error) {
 		return nil, err
 	}
 
+	err = s.Repository.AddToken(&RefreshToken{
+		Id:          uuid.New(),
+		StringToken: *refreshToken,
+		UserId:      foundUser.Id,
+	})
+	if err != nil {
+		log.Printf("Error in user-ServiceImp-Login:%v", err)
+		return nil, err
+	}
+
 	return refreshToken, nil
 }
 
