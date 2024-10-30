@@ -10,7 +10,7 @@ type Task struct {
 	Id            uuid.UUID `json:"id"`
 	Name          string    `json:"name"`
 	Description   string    `json:"description"`
-	Priority      int       `json:"priority"`
+	Priority      int64     `json:"priority"`
 	DueDate       time.Time `json:"dueDate"`
 	DateCompleted NullTime  `json:"dateCompleted"`
 	DateDeleted   NullTime  `json:"dateDeleted"`
@@ -20,6 +20,6 @@ type Task struct {
 type NewTask struct {
 	Name        string    `json:"name"`
 	Description string    `json:"description"`
-	Priority    int       `json:"priority"`
+	Priority    int64     `json:"priority"`
 	DueDate     time.Time `json:"dueDate"`
 }
