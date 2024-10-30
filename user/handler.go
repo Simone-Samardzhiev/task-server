@@ -62,7 +62,7 @@ func (h *HandlerImp) HandleLogin(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 
-	_, err = fmt.Fprint(w, token)
+	_, err = fmt.Fprint(w, *token)
 	if err != nil {
 		log.Printf("Error in user-HandleImp-HandleLogin: %v", err)
 		h.handleServerError(w)
