@@ -112,8 +112,8 @@ func (r *PostgresRepository) DeleteTask(id *uuid.UUID) error {
 }
 
 // NewRepository will create a PostgresRepository.
-func NewRepository(db *sql.DB) *PostgresRepository {
-	return &PostgresRepository{
+func NewRepository(db *sql.DB) PostgresRepository {
+	return PostgresRepository{
 		database: db,
 	}
 }

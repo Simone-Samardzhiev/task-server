@@ -8,6 +8,7 @@ import (
 	"os"
 	"strings"
 	"task-server/middleware"
+	"task-server/task"
 	"task-server/user"
 )
 
@@ -49,7 +50,7 @@ func LoadEnvironmentFiles(path string) {
 }
 
 // CreateHandlers will create the handlers for the server.
-func CreateHandlers() user.Handler {
+func CreateHandlers() (user.Handler, task.Handler) {
 	dbName := os.Getenv("DB_NAME")
 	dbUser := os.Getenv("DB_USERNAME")
 	dbPassword := os.Getenv("DB_PASSWORD")
@@ -70,7 +71,9 @@ func CreateHandlers() user.Handler {
 
 	userRepository := user.NewPostgresRepository(db)
 	authenticator := middleware.NewJWTAuthenticator([]byte(jwtSecret), []string{"Task-App"}, "localhost")
-	service := user.NewServiceImp(userRepository, authenticator)
-	handler := user.NewHandlerImp(service)
-	return handler
+	userService := user.NewServiceImp(userRepository, authenticator)
+	userHandler := user.NewHandlerImp(userService)
+
+	taskRepository := task.NewRepository(db)
+	taskService := task.NewServiceImp(taskRepository, authenticator)
 }

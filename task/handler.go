@@ -182,3 +182,9 @@ func (h *HandlerImp) HandleDelete(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 }
+
+func NewHandlerImp(service Service) HandlerImp {
+	return HandlerImp{
+		Service: service,
+	}
+}
