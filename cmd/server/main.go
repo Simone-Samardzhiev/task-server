@@ -8,12 +8,16 @@ import (
 
 func main() {
 	config.LoadEnvironmentFiles("../../config/.env")
-	userHandler := config.CreateHandlers()
+	userHandler, taskHandler := config.CreateHandlers()
 
 	mux := http.NewServeMux()
 	mux.Handle("/users/login", http.HandlerFunc(userHandler.HandleLogin))
 	mux.Handle("/users/register", http.HandlerFunc(userHandler.HandleRegister))
 	mux.Handle("/users/refresh", http.HandlerFunc(userHandler.HandleRefresh))
+	mux.Handle("/tasks/get", http.HandlerFunc(taskHandler.HandleGet))
+	mux.Handle("/tasks/add", http.HandlerFunc(taskHandler.HandlePost))
+	mux.Handle("/tasks/update", http.HandlerFunc(taskHandler.HandlePut))
+	mux.Handle("/tasks/delete", http.HandlerFunc(taskHandler.HandleDelete))
 
 	err := http.ListenAndServeTLS(":8080", "../../server-cert.pem", "../../server-key.pem", mux)
 	if err != nil {

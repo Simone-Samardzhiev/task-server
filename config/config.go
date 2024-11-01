@@ -75,5 +75,8 @@ func CreateHandlers() (user.Handler, task.Handler) {
 	userHandler := user.NewHandlerImp(userService)
 
 	taskRepository := task.NewRepository(db)
-	taskService := task.NewServiceImp(taskRepository, authenticator)
+	taskService := task.NewServiceImp(&taskRepository, authenticator)
+	taskHandler := task.NewHandlerImp(&taskService)
+
+	return userHandler, &taskHandler
 }

@@ -107,9 +107,9 @@ func (s *ServiceImp) DeleteTask(tokenString *string, uuid *uuid.UUID) error {
 }
 
 // NewServiceImp will create a new service with a authenticator and repository.
-func NewServiceImp(repository *Repository, authenticator *middleware.Authenticator) ServiceImp {
+func NewServiceImp(repository Repository, authenticator middleware.Authenticator) ServiceImp {
 	return ServiceImp{
-		Repository:    *repository,
-		Authenticator: *authenticator,
+		Repository:    repository,
+		Authenticator: authenticator,
 	}
 }
