@@ -29,7 +29,7 @@ func (r *PostgresRepository) countTasks(id *uuid.UUID) (int64, error) {
 
 // GetTasks will get all tasks of a user.
 func (r *PostgresRepository) GetTasks(id *uuid.UUID) ([]Task, error) {
-	query := "SELECT * FROM tasks WHERE user_id = $1"
+	query := "SELECT id, name, description, priority, due_date, date_completed, date_deleted FROM tasks WHERE user_id = $1"
 	log.Printf("Executing query in task-PostgresRepository-GetTasks: %s | Parameters %s", query, id.String())
 
 	rows, err := r.database.Query(query, *id)
@@ -48,7 +48,7 @@ func (r *PostgresRepository) GetTasks(id *uuid.UUID) ([]Task, error) {
 
 	for rows.Next() {
 		var task Task
-		err = rows.Scan(&task.Id, &task.Name, &task.Description, &task.DueDate, &task.DateCompleted, &task.DateDeleted)
+		err = rows.Scan(&task.Id, &task.Name, &task.Description, &task.Priority, &task.DueDate, &task.DateCompleted, &task.DateDeleted)
 		if err != nil {
 			log.Printf("Error in task-PostgresRepsitory-GetTasks: %v", err)
 		}
