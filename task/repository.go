@@ -61,8 +61,8 @@ func (r *PostgresRepository) GetTasks(id *uuid.UUID) ([]Task, error) {
 
 // CheckPriority will check if a priority is found in the database.
 func (r *PostgresRepository) CheckPriority(priority *int64) (bool, error) {
-	query := "SELECT COUNT(id) FROM tasks WHERE priority = $1"
-	log.Printf("Executing query in task-PostgresRepository-CheckPriority: %s | Parameters %d", query, priority)
+	query := "SELECT COUNT(id) FROM task_priorities WHERE id = $1"
+	log.Printf("Executing query in task-PostgresRepository-CheckPriority: %s | Parameters %d", query, *priority)
 
 	row := r.database.QueryRow(query, priority)
 	var count int64
