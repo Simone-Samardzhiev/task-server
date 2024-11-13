@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 )
 
+// NullTime is a struct that will extend sql.NullTime and define custom encoding methods.
 type NullTime struct {
 	sql.NullTime
 }
