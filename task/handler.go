@@ -94,8 +94,11 @@ func (h *HandlerImp) HandlePost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	newTask, err := h.Service.AddTask(&token, &receivedTask)
-	if errors.Is(err, ErrInvalidToken) {
+	if errors.Is(err, ErrInvalidPriority) {
 		h.handleInvalidPriority(w)
+		return
+	} else if errors.Is(err, ErrInvalidToken) {
+		h.handleInvalidToken(w)
 		return
 	} else if err != nil {
 		log.Printf("Error in task-HandlerImp-HandlePost: %v", err)
