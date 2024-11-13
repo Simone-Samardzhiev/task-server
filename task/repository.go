@@ -2,8 +2,9 @@ package task
 
 import (
 	"database/sql"
-	"github.com/google/uuid"
 	"log"
+
+	"github.com/google/uuid"
 )
 
 // PostgresRepository is an implementation of Repository.

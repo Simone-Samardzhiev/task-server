@@ -32,7 +32,7 @@ func (a *JWTAuthenticator) checkClaims(claims *jwt.RegisteredClaims) bool {
 		return false
 	}
 
-	if !reflect.DeepEqual(claims.Audience, a.audience) {
+	if !reflect.DeepEqual([]string(claims.Audience), a.audience) {
 		log.Printf("The token audience is not %v", a.audience)
 		return false
 	}

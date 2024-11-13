@@ -3,10 +3,11 @@ package task
 import (
 	"encoding/json"
 	"errors"
-	"github.com/google/uuid"
 	"log"
 	"net/http"
 	"task-server/middleware"
+
+	"github.com/google/uuid"
 )
 
 // HandlerImp is an implementation of Handler.

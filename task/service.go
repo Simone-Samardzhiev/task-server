@@ -2,9 +2,10 @@ package task
 
 import (
 	"database/sql"
-	"github.com/google/uuid"
 	"log"
 	"task-server/middleware"
+
+	"github.com/google/uuid"
 )
 
 // ServiceImp is an implementation of Service.

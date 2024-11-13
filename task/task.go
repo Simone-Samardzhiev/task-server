@@ -1,8 +1,9 @@
 package task
 
 import (
-	"github.com/google/uuid"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 // Task defines the data stored in a task.
