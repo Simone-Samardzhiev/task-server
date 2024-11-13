@@ -2,11 +2,12 @@ package middleware
 
 import (
 	"fmt"
-	"github.com/golang-jwt/jwt/v5"
-	"github.com/google/uuid"
 	"log"
 	"reflect"
 	"time"
+
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
 )
 
 // JWTAuthenticator is an implementation of Authenticator.
@@ -51,7 +52,7 @@ func (a *JWTAuthenticator) CreateRefreshToken(id *uuid.UUID) (*string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString(a.secret)
 	if err != nil {
-		log.Printf("Error in CreateRefreshToken line 52: %v", err)
+		log.Printf("Error in middleware-authenticator-CreateRefreshToken: %v", err)
 		return nil, err
 	}
 
@@ -68,7 +69,7 @@ func (a *JWTAuthenticator) CheckRefreshToken(tokenString *string) (*uuid.UUID, e
 		return a.secret, nil
 	})
 	if err != nil {
-		log.Printf("Error in CheckRefreshToken line 68: %v", err)
+		log.Printf("Error in middleware-authenticator-CheckRefreshToken: %v", err)
 	}
 
 	claims, ok := token.Claims.(*jwt.RegisteredClaims)
@@ -79,7 +80,7 @@ func (a *JWTAuthenticator) CheckRefreshToken(tokenString *string) (*uuid.UUID, e
 
 	id, err := uuid.Parse(claims.ID)
 	if err != nil {
-		log.Printf("Error in CheckRefreshToken line 79: %v", err)
+		log.Printf("Error in middleware-authenticator-CheckRefreshToken: %v", err)
 	}
 
 	return &id, nil
@@ -97,7 +98,7 @@ func (a *JWTAuthenticator) CreateAccessToken(id *uuid.UUID) (*string, error) {
 
 	tokenString, err := token.SignedString(a.secret)
 	if err != nil {
-		log.Printf("Error in CreateAccessToken line 96: %v", err)
+		log.Printf("Error in middleware-authenticator-CreateAccessToken: %v", err)
 	}
 	return &tokenString, nil
 }
@@ -112,23 +113,23 @@ func (a *JWTAuthenticator) CheckAccessToken(tokenString *string) (*uuid.UUID, er
 		return a.secret, nil
 	})
 	if err != nil {
-		log.Printf("Error in CheckAccessToken line 110: %v", err)
+		log.Printf("Error in middleware-authenticator-CheckAccessToken: %v", err)
 	}
 
 	claims, ok := token.Claims.(*jwt.RegisteredClaims)
 	if !ok || !token.Valid {
-		log.Printf("The token or the claims are not valid in CheckAccessToken line 116 ")
+		log.Printf("The token or the claims are not valid in middleware-authenticator-CheckAccessToken")
 		return nil, fmt.Errorf("the token claims are not valid")
 	}
 
 	if !a.checkClaims(claims) {
-		log.Printf("The token claims are not valid in CheckAccessToken line 121")
+		log.Printf("The token claims are not valid in middleware-authenticator-CheckAccessToken")
 		return nil, fmt.Errorf("the token claims are not valid")
 	}
 
 	id, err := uuid.Parse(claims.Subject)
 	if err != nil {
-		log.Printf("Error in CheckAccessToken line 126: %v", err)
+		log.Printf("Error in middleware-authenticator-CheckAccessToken: %v", err)
 	}
 
 	return &id, nil
