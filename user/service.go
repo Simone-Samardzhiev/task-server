@@ -3,10 +3,11 @@ package user
 import (
 	"database/sql"
 	"errors"
-	"github.com/google/uuid"
-	"golang.org/x/crypto/bcrypt"
 	"log"
 	"task-server/middleware"
+
+	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // ServiceImp is an implementation of Service.
@@ -129,7 +130,7 @@ func (s *ServiceImp) RefreshTokens(tokenSting *string) (*TokenGroup, error) {
 		return nil, err
 	}
 
-	accessToken, err := s.Authenticator.CreateAccessToken(&fetchedToken.Id)
+	accessToken, err := s.Authenticator.CreateAccessToken(&fetchedToken.UserId)
 	if err != nil {
 		log.Printf("Error in user-ServiceImp-RefreshTokens: %v", err)
 		return nil, err
