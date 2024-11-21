@@ -53,6 +53,7 @@ func (h *HandlerImp) HandleLogin(w http.ResponseWriter, r *http.Request) {
 
 	if errors.Is(err, ErrWrongCredentials) {
 		http.Error(w, "Wrong credentials", http.StatusUnauthorized)
+		return
 	} else if err != nil {
 		log.Printf("Error in user-HandleImp-HandleLogin: %v", err)
 		h.handleServerError(w)
