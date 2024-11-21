@@ -60,7 +60,7 @@ func (h *HandlerImp) HandleLogin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "text/plain")
 
 	_, err = fmt.Fprint(w, *token)
 	if err != nil {
