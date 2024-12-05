@@ -19,7 +19,7 @@ func main() {
 	mux.Handle("/tasks/update", http.HandlerFunc(taskHandler.HandlePut))
 	mux.Handle("/tasks/delete", http.HandlerFunc(taskHandler.HandleDelete))
 
-	err := http.ListenAndServeTLS(":8080", "../../server-cert.pem", "../../server-key.pem", mux)
+	err := http.ListenAndServe(":8080", mux)
 	if err != nil {
 		log.Fatal(err)
 	}
